@@ -22,8 +22,8 @@ t1 = toc;  %計時結束
 figure(1); imagesc(x, y, count); axis xy; axis image; colorbar;  %axis xy讓y軸向上增加
 %axis image = axis equal + axis tight 
 title('方法一：矩陣運算');
-
-%% 方法二：逐點運算
+exportgraphics(gcf, 'mandelbrot.png', 'Resolution', 300);
+%% 方法二：迴圈運算
 count2 = zeros(size(C));
 tic  %計時開始
 for r = 1:size(C,1)        %r是第幾列
@@ -39,9 +39,9 @@ end
 t2 = toc;  %計時結束
 figure(2); imagesc(x, y, count2); axis xy; axis image; colorbar; %axis xy讓y軸向上增加
 %axis image = axis equal + axis tight 
-title('方法二：逐點運算');
-
+title('方法二：迴圈運算');
+exportgraphics(gcf, 'mandelbrot2.png', 'Resolution', 300);
 %% 比較結果
 clc;
 fprintf('矩陣運算：%.4f 秒\n', t1);
-fprintf('逐點運算：%.4f 秒\n', t2);
+fprintf('迴圈運算：%.4f 秒\n', t2);
