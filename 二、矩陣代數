@@ -7,7 +7,7 @@ x = linspace(-2, 1, 600);      %實部範圍
 y = linspace(-1.5, 1.5, 600);  %虛部範圍
 [X, Y] = meshgrid(x, y);
 C = X + 1i*Y;                  %建立600*600的複數矩陣
-maxIter = 100;  %用Mandelbrot 集合公式運算100次
+maxIter = 100;  %用Mandelbrot集合公式運算100次
 
 %% 方法一：矩陣運算
 z = zeros(size(C));
@@ -15,7 +15,7 @@ count = zeros(size(C));
 tic                            %計時開始
 for k = 1:maxIter
     inside = abs(z) <= 2;  %點不逃逸的條件
-    z(inside) = z(inside).^2 + C(inside); %對單一個點做迭代
+    z(inside) = z(inside).^2 + C(inside); %套用Mandelbrot集合公式
     count(inside) = count(inside) + 1; %把未逃逸的點之位置在count矩陣上+1
 end
 t1 = toc;  %計時結束
