@@ -1,5 +1,7 @@
 %% Mandelbrot 集合
 %設定
+close all;
+clear;
 clc; 
 x = linspace(-2, 1, 600);      %實部範圍
 y = linspace(-1.5, 1.5, 600);  %虛部範圍
@@ -13,32 +15,33 @@ count = zeros(size(C));
 tic                            %計時開始
 for k = 1:maxIter
     inside = abs(z) <= 2;  %點不逃逸的條件
-    z(inside) = z(inside).^2 + C(inside); %只對不逃逸的點運算
-    count(inside) = count(inside) + 1; %把不逃逸的點之位置在count矩陣上+1
+    z(inside) = z(inside).^2 + C(inside); %對單一個點做迭代
+    count(inside) = count(inside) + 1; %把未逃逸的點之位置在count矩陣上+1
 end
 t1 = toc;  %計時結束
-figure(1); imagesc(x, y, count); axis xy; axis image; colorbar;
+figure(1); imagesc(x, y, count); axis xy; axis image; colorbar;  %axis xy讓y軸向上增加
+%axis image = axis equal + axis tight 
 title('方法一：矩陣運算');
 
-%% 方法二：逐點迴圈
+%% 方法二：逐點運算
 count2 = zeros(size(C));
 tic  %計時開始
-for r = 1:size(C,1)
-    for s = 1:size(C,2)
+for r = 1:size(C,1)        %r是第幾列
+    for s = 1:size(C,2)    %s是第幾行
         z = 0; k = 0;
-        while abs(z) <= 2 && k < maxIter
-            z = z^2 + C(r,s);
+        while abs(z) <= 2 && k < maxIter  %對未逃逸的點運算
+            z = z^2 + C(r,s);   %對單一個點做迭代
             k = k + 1;
         end
-        count2(r,s) = k;
+        count2(r,s) = k;  %看點可以撐到第幾次運算才逃逸
     end
 end
 t2 = toc;  %計時結束
 figure(2); imagesc(x, y, count2); axis xy; axis image; colorbar; %axis xy讓y軸向上增加
-                                                                                                        %axis image = axis equal + axis tight 
-title('方法二：逐點迴圈');
+%axis image = axis equal + axis tight 
+title('方法二：逐點運算');
 
 %% 比較結果
 clc;
 fprintf('矩陣運算：%.4f 秒\n', t1);
-fprintf('逐點迴圈：%.4f 秒\n', t2);
+fprintf('逐點運算：%.4f 秒\n', t2);
