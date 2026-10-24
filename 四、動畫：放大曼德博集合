@@ -1,0 +1,21 @@
+clf; clear; clc;
+c0 = -0.7436 + 0.1318i;  %放大中心
+w = 3; %畫面寬度
+if isfile('zoom.gif'), delete('zoom.gif'); end  %把舊的gif刪掉
+
+for f = 1:30
+    x = real(c0) + linspace(-w/2, w/2, 300);  %取出實部
+    y = imag(c0) + linspace(-w/2, w/2, 300);  %取出虛部  把點平移到以c0為中心
+    [X, Y] = meshgrid(x, y);
+    C = X + 1i*Y;
+    z = zeros(size(C));
+    count = zeros(size(C));
+    for k = 1:100 + 10*f  %越放大要算越多步才看得到細節
+        inside = abs(z) <= 2;  %點不逃逸的條件
+        z(inside) = z(inside).^2 + C(inside);  %曼德博集合公式
+        count(inside) = count(inside) + 1;   %在count矩陣上+1
+    end
+    imagesc(x, y, count); axis xy image off;          %xy:y軸向上增加 
+    exportgraphics(gcf, 'zoom.gif', 'Append', true);  %image:等比例並貼齊資料範圍
+    w = w * 0.5;    %可以調每張要縮小多少%              %off:隱藏座標軸刻度和數字
+end
