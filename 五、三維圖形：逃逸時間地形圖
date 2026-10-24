@@ -1,0 +1,19 @@
+x = linspace(-2, 1, 200);  %前半段和第二章一模一樣
+y = linspace(-1.5, 1.5, 200);
+[X, Y] = meshgrid(x, y);
+C = X + 1i*Y;
+maxIter = 50;
+z = zeros(size(C));
+count = zeros(size(C));
+for k = 1:maxIter
+    inside = abs(z) <= 2;
+    z(inside) = z(inside).^2 + C(inside);
+    count(inside) = count(inside) + 1;
+end
+
+H = count;
+H(count == maxIter) = 0;     %把運算了50次後都沒有逃逸的點的位置變成0
+surf(x, y, H);               %把H當高度畫成曲面
+shading interp;              %去掉網格線，顏色漸變
+colorbar;
+xlabel('實部'); ylabel('虛部'); zlabel('逃逸時間');
