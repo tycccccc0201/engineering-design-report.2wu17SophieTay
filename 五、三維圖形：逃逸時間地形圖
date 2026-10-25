@@ -13,7 +13,7 @@ end
 
 H = count;
 H(count == maxIter) = 0;     %把運算了50次後都沒有逃逸的點的位置變成0
-surf(x, y, H);               %把H當高度畫成曲面
-shading interp;              %去掉網格線，顏色漸變
+surf(x, y, H);               %把H當高度畫成曲面圖
+shading interp;              %去掉網格線，把弄成顏色漸變的樣子
 colorbar;
 xlabel('實部'); ylabel('虛部'); zlabel('逃逸時間');
