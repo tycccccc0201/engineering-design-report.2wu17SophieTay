@@ -17,7 +17,7 @@ draw(menu, sld, box, img);        %↑ "~"表示「收到了，但不需要」
 
 function draw(menu, sld, box, img)
 c = [-0.5, -0.745+0.113i, 0.275, -0.08884+0.65476i, -1.7497, -0.7269+0.1889i, -1.25066+0.02012i, -0.1607+1.0376i];
-c0 = c(menu.Value);                          %決定放大中心，menu.Value是選了第幾個選項
+c0 = c(menu.Value);                          %決定縮放點，menu.Value是選了第幾個選項
 w = 3 / 10^sld.Value;                        %用滑桿決定放大倍率，10^(滑桿的值) -> 畫面寬度
 %↓ 和第四章的動畫程式一樣
 x = real(c0) + linspace(-w/2, w/2, 300);  %實部
