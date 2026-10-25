@@ -46,7 +46,7 @@ x = linspace(-1.5, 1.5, 500);
 [X, Y] = meshgrid(x, x);   %實部和虛部用同一組x，共500*500個元素
 Z = X + 1i*Y;   %把每個點分別當成起始點來找根
 
-for k = 1:30   %↓ 把Z代入多項式p再除以Z代入dp
+for k = 1:30   %↓ polyval(p,Z)把Z代入多項式p再除以Z代入dp
     Z = Z - polyval(p, Z) ./ polyval(dp, Z);  %一項對一項除用「./」
 end
 color = zeros(size(Z));
