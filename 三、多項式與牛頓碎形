@@ -1,3 +1,4 @@
+%% 牛頓法的示意圖
 %函數: f(x)=x^2-2
 %牛頓法: xₙ₊₁=xₙ−f(xₙ)/f′(xₙ)
 clf;               
@@ -34,3 +35,22 @@ hold off;  %結束疊圖模式
 xlabel('x'); ylabel('y');
 legend('f(x) = x^2 - 2', '第 1 條切線', '第 2 條切線', 'Location', 'northwest');
 %↑ legend()可以拿來放圖例，他會對應我畫的前三條，所以虛線要畫在切線後面
+
+%%
+%牛頓碎形
+clf
+p = [1 0 0 -1];             %f(x)=z^3-1
+dp = polyder(p);            %f'(x)=3z^2，polyder(p)對p微分
+r = roots(p);               %三個根
+x = linspace(-1.5, 1.5, 500);
+[X, Y] = meshgrid(x, x);   %實部和虛部用同一組x，共500*500個元素
+Z = X + 1i*Y;   %把每個點分別當成起始點來找根
+
+for k = 1:30   %↓ 把Z代入多項式p再除以Z代入dp
+    Z = Z - polyval(p, Z) ./ polyval(dp, Z);  %一項對一項除用「./」
+end
+color = zeros(size(Z));
+for j = 1:3   %↓ 每個點到第j個根的距離，當距離小於10^(-6)就當作已經收斂到這個根了
+    color(abs(Z - r(j)) < 1e-6) = j;  %收斂到第j個根就標j
+end                                   
+imagesc(x, x, color); axis xy image; colorbar;
