@@ -39,8 +39,8 @@ legend('f(x) = x^2 - 2', '第 1 條切線', '第 2 條切線', 'Location', 'nort
 %%
 %牛頓碎形
 clf
-p = [1 0 0 -1];             %f(x)=z^3-1
-dp = polyder(p);            %f'(x)=3z^2，polyder(p)對p微分
+p = [1 0 0 -1];             %f(x)=Z^3-1
+dp = polyder(p);            %f'(x)=3Z^2，polyder(p)對p微分
 r = roots(p);               %三個根
 x = linspace(-1.5, 1.5, 500);
 [X, Y] = meshgrid(x, x);   %實部和虛部用同一組x，共500*500個元素
