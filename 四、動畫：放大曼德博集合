@@ -1,10 +1,10 @@
-c0 = -0.745   + 0.113i;     % 1 海馬谷
-c0 =  0.275   + 0i;         % 2 大象谷
-c0 = -0.08884 + 0.65476i;   % 3 三重螺旋
-c0 = -1.7497  + 0i;         % 4 微型曼德博
-c0 = -0.7269  + 0.1889i;    % 5 觸角
-c0 = -1.25066 + 0.02012i;   % 6 閃電
-c0 = -0.1607  + 1.0376i;    % 7 皇冠
+c0 = -0.745 + 0.113i;     %海馬谷
+c0 =  0.275 + 0i;         %大象谷
+c0 = -0.08884 + 0.65476i;   %三重螺旋
+c0 = -1.7497 + 0i;         %微型曼德博
+c0 = -0.7269 + 0.1889i;    %觸角
+c0 = -1.25066 + 0.02012i;   %閃電
+c0 = -0.1607 + 1.0376i;    %皇冠
 %%
 clf; clc;
 c0 = -0.08884 + 0.65476i;  %放大中心
@@ -13,7 +13,7 @@ if isfile('zoom.gif'), delete('zoom.gif'); end
 
 for f = 1:30
     x = real(c0) + linspace(-w/2, w/2, 300);  %取出實部
-    y = imag(c0) + linspace(-w/2, w/2, 300);  %取出虛部  把點平移到以c0為中心
+    y = imag(c0) + linspace(-w/2, w/2, 300);  %取出虛部，把點平移到以c0為中心
     [X, Y] = meshgrid(x, y);
     C = X + 1i*Y;
     z = zeros(size(C));
@@ -24,10 +24,8 @@ for f = 1:30
         count(inside) = count(inside) + 1;  %在count矩陣上+1
     end
     imagesc(x, y, count); axis xy image off;    %xy:y軸向上增加
-    pause(0.1);                                   %停0.1秒，讓畫面更新
-    M(f) = getframe(gcf);                         %把這張畫面存起來
+    pause(0.1);                %停0.1秒，讓畫面更新
+    M(f) = getframe(gcf);      %把這張畫面存起來
     exportgraphics(gcf, 'zoom.gif', 'Append', true);  %image:等比例並貼齊資料範圍
     w = w * 0.6;  %可以調每張要縮小幾%               %off:隱藏座標軸刻度和數字
 end
-
-movie(M, 2);                                      % 在 Figures 重播 2 次
