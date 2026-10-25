@@ -1,22 +1,36 @@
-clf;
-x0 = 3;                                 % 起始猜測
-x1 = x0 - (x0^2 - 2) / (2*x0);          % 牛頓法第 1 步
-x2 = x1 - (x1^2 - 2) / (2*x1);          % 牛頓法第 2 步
+%函數: f(x)=x^2-2
+%牛頓法: xₙ₊₁=xₙ−f(xₙ)/f′(xₙ)
+clf;               
+x0 = 3;  %從x=3開始猜
+x1 = x0 - (x0^2 - 2) / (2*x0);  %x1=x0−f(x0)/f′(x0)
+x2 = x1 - (x1^2 - 2) / (2*x1);  %x2=x1−f(x1)/f′(x1)
 
 t = linspace(0.6, 3.3, 400);
-plot(t, t.^2 - 2, 'b', 'LineWidth', 2); hold on;     % 函數
-plot([x0 x1], [x0^2-2 0], 'r', 'LineWidth', 2);      % 第 1 條切線
-plot([x1 x2], [x1^2-2 0], 'g', 'LineWidth', 2);      % 第 2 條切線
-plot([x0 x0], [0 x0^2-2], 'r--', 'LineWidth', 1.5);   % 從 x0 垂直往上的虛線
-plot([x1 x1], [0 x1^2-2], 'g--', 'LineWidth', 1.5);   % 從 x1 垂直往上的虛線
-plot([0.6 3.3], [0 0], 'k');                          % x 軸
+plot(t, t.^2 - 2, 'b', 'LineWidth', 2);   %畫出每個點的函數值，t是向量要用「.^」
+hold on;  %讓舊圖能留著不會被新畫的圖蓋掉    
+
+%plot([a b], [c d],'顏色','LineWidth',粗細)
+%會畫一條從(a,c)到(b,d)的線段
+plot([x0 x1], [x0^2-2 0], 'r', 'LineWidth', 2);  %第1條切線
+plot([x1 x2], [x1^2-2 0], 'g', 'LineWidth', 2);  %第2條切線
+plot([x0 x0], [0 x0^2-2], 'r--', 'LineWidth', 1.5);   %從x0垂直往上的虛線
+plot([x1 x1], [0 x1^2-2], 'g--', 'LineWidth', 1.5);   %從x1垂直往上的虛線
+plot([0.6 3.3], [0 0], 'k');   %x軸
+
+%↓ 'o' 代表只畫圓點不連線， 'MarkerFaceColor' 則是把圓點填滿顏色
 plot([x0 x1 x2], [0 0 0], 'ko', 'MarkerFaceColor', 'k');
 text([x0 x1 x2], [-0.9 -0.9 -0.9], {'x_0', 'x_1', 'x_2'}, 'FontSize', 12, 'HorizontalAlignment', 'center');
-plot(sqrt(2), 0, 'rp', 'MarkerSize', 14, 'MarkerFaceColor', 'r');   % 根的位置
+%↑ 'HorizontalAlignment' 和 'center' 讓文字的中心對齊 x 座標
+
+%↓ 'rp' 是紅色五角星
+plot(sqrt(2), 0, 'rp', 'MarkerSize', 14, 'MarkerFaceColor', 'r');   %根的位置
 text(sqrt(2), 0.4, '\downarrow', 'Color', 'r', 'FontSize', 13, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+%↑ \downarrow 會顯示成 "↓"， 'VerticalAlignment' 和 'bottom' 可以讓文字的底端對齊y = 0.4
 text(sqrt(2), 1.1, '根 ', 'Color', 'r', 'FontSize', 15, 'HorizontalAlignment', 'right', 'VerticalAlignment', 'bottom');
 text(sqrt(2), 1.1, '$\sqrt{2}$', 'Interpreter', 'latex', 'Color', 'r', 'FontSize', 13, 'VerticalAlignment', 'bottom');
-hold off;
+%↑ 用「LaTeX」語法把根號2打出來，$...$裡面要打數學式
+
+hold off;  %結束疊圖模式
 xlabel('x'); ylabel('y');
 legend('f(x) = x^2 - 2', '第 1 條切線', '第 2 條切線', 'Location', 'northwest');
-exportgraphics(gcf, 'newton_method.png', 'Resolution', 300);
+%↑ legend()可以拿來放圖例，他會對應我畫的前三條，所以虛線要畫在切線後面
