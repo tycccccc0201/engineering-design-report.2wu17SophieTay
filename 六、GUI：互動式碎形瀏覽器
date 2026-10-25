@@ -7,15 +7,16 @@ img = imagesc(axes(fig, 'Position', [0.1 0.3 0.8 0.65]), 0); %imagesc(圖畫區,
 %↓ 都用unicontrol存，'Style'決定元件種類
 menu = uicontrol('Style', 'popupmenu', 'Units', 'normalized', 'Position', [0.1 0.15 0.4 0.07], ...
     'String', {'完整畫面', '海馬谷', '大象谷', '三重螺旋', '微型曼德博', '觸角', '閃電', '皇冠'});
-sld = uicontrol('Style', 'slider', 'Min', 0, 'Max', 6, 'Units', 'normalized', 'Position', [0.1 0.05 0.4 0.05]);
+sld = uicontrol('Style', 'slider', 'Min', 0, 'Max', 6, 'Units', 'normalized', 'Position', [0.1 0.05 0.28 0.05]);
+zoomTxt = uicontrol('Style', 'text', 'String', '放大 1 倍', 'Units', 'normalized', 'Position', [0.39 0.04 0.15 0.06]);
 uicontrol('Style', 'text', 'String', '迭代次數', 'Units', 'normalized', 'Position', [0.55 0.13 0.2 0.06]);  %只是標籤，沒有存成變數
 box = uicontrol('Style', 'edit', 'String', '200', 'Units', 'normalized', 'Position', [0.55 0.05 0.2 0.07]);
 
-set([menu sld box], 'Callback', @(~,~) draw(menu, sld, box, img));   %設定元件被操作時要做甚麼
-draw(menu, sld, box, img);        %↑ "~"表示「收到了，但不需要」
+set([menu sld box], 'Callback', @(~,~) draw(menu, sld, box, img, zoomTxt));   %設定元件被操作時要做甚麼
+draw(menu, sld, box, img, zoomTxt);   %↑ "~"表示「收到了，但不需要」
 %↑ 程式一開始要先畫一次，不然打開時會是空白
 
-function draw(menu, sld, box, img)
+function draw(menu, sld, box, img, zoomTxt)
 c = [-0.5, -0.745+0.113i, 0.275, -0.08884+0.65476i, -1.7497, -0.7269+0.1889i, -1.25066+0.02012i, -0.1607+1.0376i];
 c0 = c(menu.Value);                          %決定縮放點，menu.Value是選了第幾個選項
 w = 3 / 10^sld.Value;                        %用滑桿決定放大倍率，10^(滑桿的值) -> 畫面寬度
@@ -34,5 +35,5 @@ end
 
 set(img, 'XData', x, 'YData', y, 'CData', count);  %用握把img更換圖片內容(只是換資料，不是重畫一張)
 axis(img.Parent, 'xy', 'image');  %img.Parent是這張圖所在的圖畫區，用來設定座標軸和標題
-title(img.Parent, sprintf('放大 %d 倍', round(3/w)));
+zoomTxt.String = sprintf('放大 %d 倍', round(3/w));
 end
