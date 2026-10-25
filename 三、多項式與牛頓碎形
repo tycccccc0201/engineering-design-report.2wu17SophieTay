@@ -1,0 +1,22 @@
+clf;
+x0 = 3;                                 % 起始猜測
+x1 = x0 - (x0^2 - 2) / (2*x0);          % 牛頓法第 1 步
+x2 = x1 - (x1^2 - 2) / (2*x1);          % 牛頓法第 2 步
+
+t = linspace(0.6, 3.3, 400);
+plot(t, t.^2 - 2, 'b', 'LineWidth', 2); hold on;     % 函數
+plot([x0 x1], [x0^2-2 0], 'r', 'LineWidth', 2);      % 第 1 條切線
+plot([x1 x2], [x1^2-2 0], 'g', 'LineWidth', 2);      % 第 2 條切線
+plot([x0 x0], [0 x0^2-2], 'r--', 'LineWidth', 1.5);   % 從 x0 垂直往上的虛線
+plot([x1 x1], [0 x1^2-2], 'g--', 'LineWidth', 1.5);   % 從 x1 垂直往上的虛線
+plot([0.6 3.3], [0 0], 'k');                          % x 軸
+plot([x0 x1 x2], [0 0 0], 'ko', 'MarkerFaceColor', 'k');
+text([x0 x1 x2], [-0.9 -0.9 -0.9], {'x_0', 'x_1', 'x_2'}, 'FontSize', 12, 'HorizontalAlignment', 'center');
+plot(sqrt(2), 0, 'rp', 'MarkerSize', 14, 'MarkerFaceColor', 'r');   % 根的位置
+text(sqrt(2), 0.4, '\downarrow', 'Color', 'r', 'FontSize', 13, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+text(sqrt(2), 1.1, '根 ', 'Color', 'r', 'FontSize', 15, 'HorizontalAlignment', 'right', 'VerticalAlignment', 'bottom');
+text(sqrt(2), 1.1, '$\sqrt{2}$', 'Interpreter', 'latex', 'Color', 'r', 'FontSize', 13, 'VerticalAlignment', 'bottom');
+hold off;
+xlabel('x'); ylabel('y');
+legend('f(x) = x^2 - 2', '第 1 條切線', '第 2 條切線', 'Location', 'northwest');
+exportgraphics(gcf, 'newton_method.png', 'Resolution', 300);
